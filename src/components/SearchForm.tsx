@@ -1,4 +1,4 @@
-export default function SearchForm() {
+export default function SearchForm({ searchText, setSearchText }) {
   return (
     <form
       onSubmit={(e) => {
@@ -12,7 +12,8 @@ export default function SearchForm() {
       </button>
 
       <input
-        value=""
+        onChange={(e) => setSearchText(e.target.value)}
+        value={searchText}
         spellCheck="false"
         type="text"
         required
