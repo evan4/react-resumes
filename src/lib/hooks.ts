@@ -1,6 +1,23 @@
 import { useEffect, useState } from "react";
 import type { JobItem } from "./types";
 
+export function useActiveId() {
+  const [activeId, setActiveId] = useState<number | null>(null);
+
+  useEffect(() => {
+    function handleChangeHash() {
+      const id = window.location.hash.slice(1) as string;
+      setActiveId(+id);
+    }
+    handleChangeHash();
+    window.addEventListener("hashchange", handleChangeHash);
+    return () => {
+      window.removeEventListener("hashchange", handleChangeHash);
+    };
+  }, []);
+  return activeId;
+}
+
 export function useJobItems(searchText: string) {
   const [jobItems, setJobItems] = useState<JobItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
